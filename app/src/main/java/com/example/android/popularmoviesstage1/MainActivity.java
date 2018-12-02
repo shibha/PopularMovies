@@ -1,30 +1,19 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.android.popularmoviesstage1;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
-
-import com.example.android.popularmoviesstage1.adapter.ImageAdapter;
+import android.widget.Spinner;
+import com.example.android.popularmoviesstage1.adapter.MovieImageAdaptor;
 import com.example.android.popularmoviesstage1.utilities.JsonUtils;
 import com.example.android.popularmoviesstage1.utilities.NetworkUtils;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
@@ -33,27 +22,67 @@ public class MainActivity extends AppCompatActivity {
 
     Logger logger = Logger.getLogger("MainActivity");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        URL movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700");
-        new GetMoviesDataTask(this).execute(movieDataURL);
+        View root_view = findViewById(R.id.movie_grid);
+        URL movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
+        new MainActivity.GetMoviesDataTask(MainActivity.this, root_view).execute(movieDataURL);
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        logger.info("MALIK");
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.sort_menu);
+        final Spinner spinner = (Spinner) item.getActionView(); // get the spinner
+        final ArrayAdapter<CharSequence> sort_menu_adaptor = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.sort_array,android.R.layout.simple_spinner_item);
+        sort_menu_adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(sort_menu_adaptor);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                URL movieDataURL = null;
+                View root_view = findViewById(R.id.movie_grid);
+                switch (position) {
+                    case 0:
+                        movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
+                        new MainActivity.GetMoviesDataTask(MainActivity.this, root_view).execute(movieDataURL);
+                        break;
+                    case 1:
+                        movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", false);
+                        new MainActivity.GetMoviesDataTask(MainActivity.this, root_view).execute(movieDataURL);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // sometimes you need nothing here
+            }
+        });
+
+        return true;
+    }
+
     public class GetMoviesDataTask extends AsyncTask<URL, Void, String> {
 
-        private Context mContext;
+        private Activity activity;
+        private View contextView;
 
-        public GetMoviesDataTask (Context context){
-            mContext = context;
+        public GetMoviesDataTask(Activity context, View view) {
+            activity = context;
+            contextView = view;
         }
 
         @Override
         protected String doInBackground(URL... params) {
-            logger.info("Starting activity  Data");
             URL searchUrl = params[0];
+
             String moviesData = null;
             try {
                 logger.info("Making a network call to get Movies Data");
@@ -67,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String moviesData) {
-            ImageAdapter imageAdapter = new ImageAdapter(mContext, JsonUtils.createMovieList(moviesData));
-            GridView gridView = (GridView) findViewById(R.id.movie_grid);
+            MovieImageAdaptor imageAdapter = new MovieImageAdaptor(activity,
+                    JsonUtils.createMovieList(moviesData));
+            GridView gridView = (GridView) contextView;
             gridView.setAdapter(imageAdapter);
         }
 
     }
+
 }

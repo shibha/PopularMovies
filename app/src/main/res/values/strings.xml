@@ -15,4 +15,10 @@
   -->
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="sort">Sort</string>
+    <string name="img_size">w185</string>
+    <string-array name="sort_array">
+        <item>Sort By Most Popular</item>
+        <item>Sort By Top Rated</item>
+    </string-array>
 </resources>

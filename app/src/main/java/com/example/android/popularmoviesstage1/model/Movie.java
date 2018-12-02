@@ -25,6 +25,22 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPlotSynopsis() {
+        return plotSynopsis;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
     private String title;
     private String imgPath;
     private String plotSynopsis;

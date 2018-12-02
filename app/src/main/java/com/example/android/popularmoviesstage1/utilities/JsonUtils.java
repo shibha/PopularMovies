@@ -36,7 +36,7 @@ public class JsonUtils {
 
         try {
             movie.setTitle(movie_json.getString("title"));
-            movie.setImgPath(movie_json.getString("imgPath"));
+            movie.setImgPath(movie_json.getString("poster_path"));
             movie.setPlotSynopsis(movie_json.getString("overview"));
             movie.setUserRating(movie_json.getInt("vote_average"));
             movie.setReleaseDate(movie_json.getString("release_date"));

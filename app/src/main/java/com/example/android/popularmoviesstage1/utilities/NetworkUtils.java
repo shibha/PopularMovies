@@ -29,17 +29,16 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
-    final static String GITHUB_BASE_URL =
-            "http://api.themoviedb.org/3/movie/popular";
+
+    final static String GITHUB_BASE_URL = "http://api.themoviedb.org/3/movie/";
+
+    final static String GITHUB_URL_POPULAR =
+            "popular";
+
+    final static String GITHUB_URL_TOP_RATED =
+            "top_rated";
 
     final static String PARAM_QUERY = "api_key";
-
-    /*
-     * The sort field. One of stars, forks, or updated.
-     * Default: results are sorted by best match if no field is specified.
-     */
-    final static String PARAM_SORT = "sort";
-    final static String sortBy = "stars";
 
     /**
      * Builds the URL used to query GitHub.
@@ -47,10 +46,17 @@ public class NetworkUtils {
      * @param githubSearchQuery The keyword that will be queried for.
      * @return The URL to use to query the GitHub.
      */
-    public static URL buildUrl(String githubSearchQuery) {
-        Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+    public static URL buildUrl(String githubSearchQuery, boolean isSortByMostPopular) {
+        String final_url = GITHUB_BASE_URL;
+
+        if (isSortByMostPopular) {
+            final_url = final_url + GITHUB_URL_POPULAR;
+        } else {
+            final_url = final_url + GITHUB_URL_TOP_RATED;
+        }
+
+        Uri builtUri = Uri.parse(final_url).buildUpon()
                 .appendQueryParameter(PARAM_QUERY, githubSearchQuery)
-                .appendQueryParameter(PARAM_SORT, sortBy)
                 .build();
 
         URL url = null;
@@ -80,15 +86,13 @@ public class NetworkUtils {
 
             //boolean hasInput = scanner.hasNext();
             //if (hasInput) {
-                return scanner.next();
+            return scanner.next();
             //} else {
-                //return null;
+            //return null;
             //}
-        } catch (Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-            finally
-        {
+        } finally {
             urlConnection.disconnect();
         }
         return null;
