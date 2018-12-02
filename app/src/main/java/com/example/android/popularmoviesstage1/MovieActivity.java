@@ -25,7 +25,7 @@ public class MovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movies);
         View root_view = findViewById(R.id.movie_grid);
         URL movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
         new MovieActivity.GetMoviesDataTask(MovieActivity.this, root_view).execute(movieDataURL);
