@@ -32,21 +32,21 @@ public class NetworkUtils {
 
     final static String GITHUB_BASE_URL = "http://api.themoviedb.org/3/movie/";
 
-    final static String GITHUB_URL_POPULAR =
-            "popular";
+    final static String GITHUB_URL_POPULAR = "popular";
 
-    final static String GITHUB_URL_TOP_RATED =
-            "top_rated";
+    final static String GITHUB_URL_TOP_RATED = "top_rated";
 
     final static String PARAM_QUERY = "api_key";
+
+    final static String PARAM_QUERY_VALUE="key";
 
     /**
      * Builds the URL used to query GitHub.
      *
-     * @param githubSearchQuery The keyword that will be queried for.
+     * @param isSortByMostPopular is the boolean which is used to choose the rest url to call
      * @return The URL to use to query the GitHub.
      */
-    public static URL buildUrl(String githubSearchQuery, boolean isSortByMostPopular) {
+    public static URL buildUrl(boolean isSortByMostPopular) {
         String final_url = GITHUB_BASE_URL;
 
         if (isSortByMostPopular) {
@@ -56,7 +56,7 @@ public class NetworkUtils {
         }
 
         Uri builtUri = Uri.parse(final_url).buildUpon()
-                .appendQueryParameter(PARAM_QUERY, githubSearchQuery)
+                .appendQueryParameter(PARAM_QUERY, PARAM_QUERY_VALUE)
                 .build();
 
         URL url = null;

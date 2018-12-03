@@ -26,12 +26,14 @@ public class MovieActivity extends AppCompatActivity {
 
     private Logger logger = Logger.getLogger(this.getClass().toString());
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie);
         View rootView = findViewById(R.id.movie_grid);
-        URL movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
+        URL movieDataURL = NetworkUtils.buildUrl(true);
         new MovieActivity.GetMoviesDataTask(MovieActivity.this, rootView).execute(movieDataURL);
     }
 
@@ -52,14 +54,13 @@ public class MovieActivity extends AppCompatActivity {
                 View root_view = findViewById(R.id.movie_grid);
                 switch (position) {
                     case 0:
-                        movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
-                        new MovieActivity.GetMoviesDataTask(MovieActivity.this, root_view).execute(movieDataURL);
+                        movieDataURL = NetworkUtils.buildUrl(true);
                         break;
                     case 1:
-                        movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", false);
-                        new MovieActivity.GetMoviesDataTask(MovieActivity.this, root_view).execute(movieDataURL);
+                        movieDataURL = NetworkUtils.buildUrl(false);
                         break;
                 }
+                new MovieActivity.GetMoviesDataTask(MovieActivity.this, root_view).execute(movieDataURL);
             }
 
             @Override
