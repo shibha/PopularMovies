@@ -38,39 +38,31 @@
         android:id="@+id/movieImg"
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="@android:dimen/thumbnail_height"
+        android:padding="3sp"
         app:layout_constraintRight_toLeftOf="@+id/guidelineImg"
         app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
+
     <TextView
         android:id="@+id/movieDetailReleaseDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@android:color/holo_blue_dark"
-        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle"
-        app:layout_constraintLeft_toRightOf="@+id/movieImg"/>
+        android:theme="@style/CenterTextTheme"
+        app:layout_constraintLeft_toRightOf="@+id/movieImg"
+        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
 
     <TextView
         android:id="@+id/movieDetailReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@android:color/holo_blue_dark"
-        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle"
-        app:layout_constraintLeft_toRightOf="@+id/movieImg"/>
+        android:theme="@style/CenterTextTheme"
+        app:layout_constraintLeft_toRightOf="@+id/movieImg"
+        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
 
     <TextView
         android:id="@+id/movieDetailUserRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:singleLine="true"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@android:color/holo_blue_dark"
+        android:theme="@style/CenterTextTheme"
         app:layout_constraintLeft_toRightOf="@+id/guidelineImg"
         app:layout_constraintTop_toBottomOf="@+id/movieDetailReleaseDate" />
 
@@ -78,10 +70,7 @@
         android:id="@+id/movieDetailPlotSynopsis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@android:color/holo_blue_dark"
+        android:theme="@style/BaseTextTheme"
         app:layout_constraintTop_toBottomOf="@+id/movieImg" />
-
 
 </android.support.constraint.ConstraintLayout>

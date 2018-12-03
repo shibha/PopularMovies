@@ -13,10 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
 import com.example.android.popularmoviesstage1.adapter.MovieImageAdaptor;
+import com.example.android.popularmoviesstage1.model.Movie;
 import com.example.android.popularmoviesstage1.utilities.JsonUtils;
 import com.example.android.popularmoviesstage1.utilities.NetworkUtils;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -28,9 +30,9 @@ public class MovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie);
-        View root_view = findViewById(R.id.movie_grid);
+        View rootView = findViewById(R.id.movie_grid);
         URL movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
-        new MovieActivity.GetMoviesDataTask(MovieActivity.this, root_view).execute(movieDataURL);
+        new MovieActivity.GetMoviesDataTask(MovieActivity.this, rootView).execute(movieDataURL);
     }
 
 
@@ -39,10 +41,10 @@ public class MovieActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem item = menu.findItem(R.id.sort_menu);
         final Spinner spinner = (Spinner) item.getActionView(); // get the spinner
-        final ArrayAdapter<CharSequence> sort_menu_adaptor = ArrayAdapter.createFromResource(this,
+        final ArrayAdapter<CharSequence> sortMenuAdaptor = ArrayAdapter.createFromResource(this,
                 R.array.sort_array,android.R.layout.simple_spinner_item);
-        sort_menu_adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(sort_menu_adaptor);
+        sortMenuAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(sortMenuAdaptor);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -96,14 +98,20 @@ public class MovieActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final String moviesData) {
+
+            final List<Movie> movieList = JsonUtils.createMovieList(moviesData);
+            if(movieList== null || movieList.size() == 0){
+                setContentView(R.layout.error);
+                return;
+            }
             MovieImageAdaptor imageAdapter = new MovieImageAdaptor(activity,
-                    JsonUtils.createMovieList(moviesData));
+                    movieList);
             GridView gridView = (GridView) contextView;
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(MovieActivity.this, MovieDetailActivity.class);
-                    intent.putExtra("Movie", JsonUtils.createMovieList(moviesData).get(position));
+                    intent.putExtra("Movie", movieList.get(position));
                     startActivity(intent);
                 }
             });

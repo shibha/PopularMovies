@@ -16,6 +16,9 @@ public class JsonUtils {
         JSONObject base = null;
         JSONArray results = null;
         List<Movie> movies = new ArrayList<>();
+        if(json == null) {
+            return movies;
+        }
         /**
          * Read the  JSON string
          */

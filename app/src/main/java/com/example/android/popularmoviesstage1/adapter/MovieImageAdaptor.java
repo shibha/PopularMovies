@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import com.example.android.popularmoviesstage1.R;
 import com.example.android.popularmoviesstage1.model.Movie;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,7 +29,7 @@ public class MovieImageAdaptor extends ArrayAdapter<Movie> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_view_item, parent, false);
         }
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.grid_item_img);
+        ImageView imageView = convertView.findViewById(R.id.grid_item_img);
         Picasso.with(getContext()).load(movie.getImgPath()).fit().into(imageView);
         return convertView;
     }
