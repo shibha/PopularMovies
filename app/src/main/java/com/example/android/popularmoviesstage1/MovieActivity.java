@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesstage1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,14 +19,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
 
+
 public class MovieActivity extends AppCompatActivity {
 
-    Logger logger = Logger.getLogger(this.getClass().toString());
+    private Logger logger = Logger.getLogger(this.getClass().toString());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.movie);
         View root_view = findViewById(R.id.movie_grid);
         URL movieDataURL = NetworkUtils.buildUrl("f073fddf11595f71af95dfcaffbe5700", true);
         new MovieActivity.GetMoviesDataTask(MovieActivity.this, root_view).execute(movieDataURL);
@@ -68,7 +70,7 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     public class GetMoviesDataTask extends AsyncTask<URL, Void, String> {
-
+        private Logger logger = Logger.getLogger(this.getClass().toString());
         private Activity activity;
         private View contextView;
 
@@ -93,10 +95,18 @@ public class MovieActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String moviesData) {
+        protected void onPostExecute(final String moviesData) {
             MovieImageAdaptor imageAdapter = new MovieImageAdaptor(activity,
                     JsonUtils.createMovieList(moviesData));
             GridView gridView = (GridView) contextView;
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MovieActivity.this, MovieDetailActivity.class);
+                    intent.putExtra("Movie", JsonUtils.createMovieList(moviesData).get(position));
+                    startActivity(intent);
+                }
+            });
             gridView.setAdapter(imageAdapter);
         }
 

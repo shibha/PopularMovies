@@ -1,6 +1,8 @@
 package com.example.android.popularmoviesstage1.model;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }

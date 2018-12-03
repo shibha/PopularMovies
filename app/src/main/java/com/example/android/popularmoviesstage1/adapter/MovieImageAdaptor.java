@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.example.android.popularmoviesstage1.R;
 import com.example.android.popularmoviesstage1.model.Movie;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -31,12 +32,6 @@ public class MovieImageAdaptor extends ArrayAdapter<Movie> {
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.grid_item_img);
         Picasso.with(getContext()).load(movie.getImgPath()).fit().into(imageView);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                logger.info(" SHIBHA movie selected is : "+ movie.getTitle());
-//            }
-//        });
         return convertView;
     }
 
