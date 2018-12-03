@@ -13,7 +13,7 @@
         android:background="@android:color/holo_blue_bright"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="70sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,13 +42,6 @@
         app:layout_constraintRight_toLeftOf="@+id/guidelineImg"
         app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
 
-    <TextView
-        android:id="@+id/movieDetailReleaseDateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/CenterTextTheme"
-        app:layout_constraintLeft_toRightOf="@+id/movieImg"
-        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
 
     <TextView
         android:id="@+id/movieDetailReleaseDate"
