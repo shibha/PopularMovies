@@ -5,5 +5,5 @@
     <ImageView
         android:id="@+id/grid_item_img"
         android:layout_width="300dp"
-        android:layout_height="300dp" />
+        android:layout_height="600dp" />
 </RelativeLayout>

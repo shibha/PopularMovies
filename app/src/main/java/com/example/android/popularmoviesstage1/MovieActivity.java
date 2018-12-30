@@ -5,17 +5,21 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.Spinner;
-import com.example.android.popularmoviesstage1.adapter.MovieImageAdaptor;
+
+import com.example.android.popularmoviesstage1.adapter.MyRecyclerViewAdapter;
 import com.example.android.popularmoviesstage1.model.Movie;
 import com.example.android.popularmoviesstage1.utilities.JsonUtils;
 import com.example.android.popularmoviesstage1.utilities.NetworkUtils;
+import com.example.android.popularmoviesstage1.utilities.Utils;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -24,15 +28,14 @@ import java.util.logging.Logger;
 
 public class MovieActivity extends AppCompatActivity {
 
+
     private Logger logger = Logger.getLogger(this.getClass().toString());
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie);
-        View rootView = findViewById(R.id.movie_grid);
+        View rootView = findViewById(R.id.recycleMovies);
         URL movieDataURL = NetworkUtils.buildUrl(true);
         new MovieActivity.GetMoviesDataTask(MovieActivity.this, rootView).execute(movieDataURL);
     }
@@ -44,14 +47,14 @@ public class MovieActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.sort_menu);
         final Spinner spinner = (Spinner) item.getActionView(); // get the spinner
         final ArrayAdapter<CharSequence> sortMenuAdaptor = ArrayAdapter.createFromResource(this,
-                R.array.sort_array,android.R.layout.simple_spinner_item);
+                R.array.sort_array, android.R.layout.simple_spinner_item);
         sortMenuAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(sortMenuAdaptor);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 URL movieDataURL = null;
-                View root_view = findViewById(R.id.movie_grid);
+                View root_view = findViewById(R.id.recycleMovies);
                 switch (position) {
                     case 0:
                         movieDataURL = NetworkUtils.buildUrl(true);
@@ -72,14 +75,14 @@ public class MovieActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     public class GetMoviesDataTask extends AsyncTask<URL, Void, String> {
         private Logger logger = Logger.getLogger(this.getClass().toString());
         private Activity activity;
-        private View contextView;
 
         public GetMoviesDataTask(Activity context, View view) {
             activity = context;
-            contextView = view;
         }
 
         @Override
@@ -101,23 +104,18 @@ public class MovieActivity extends AppCompatActivity {
         protected void onPostExecute(final String moviesData) {
 
             final List<Movie> movieList = JsonUtils.createMovieList(moviesData);
-            if(movieList== null || movieList.size() == 0){
+            if (movieList == null || movieList.size() == 0) {
                 setContentView(R.layout.error);
                 return;
             }
-            MovieImageAdaptor imageAdapter = new MovieImageAdaptor(activity,
-                    movieList);
-            GridView gridView = (GridView) contextView;
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MovieActivity.this, MovieDetailActivity.class);
-                    intent.putExtra("Movie", movieList.get(position));
-                    startActivity(intent);
-                }
-            });
-            gridView.setAdapter(imageAdapter);
+
+            RecyclerView recyclerView = findViewById(R.id.recycleMovies);
+            recyclerView.setLayoutManager(new GridLayoutManager(activity.getApplicationContext(),
+                    Utils.calculateNoOfColumns(getApplicationContext())));
+            MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(activity, movieList);
+            recyclerView.setAdapter(adapter);
         }
+
 
     }
 }

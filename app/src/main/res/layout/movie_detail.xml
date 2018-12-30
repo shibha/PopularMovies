@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.android.popularmoviesstage1.MovieDetailActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/movieDetailTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_bright"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineImg"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        tools:context="com.example.android.popularmoviesstage1.MovieDetailActivity">
 
 
-    <ImageView
-        android:id="@+id/movieImg"
-        android:layout_width="@android:dimen/thumbnail_width"
-        android:layout_height="@android:dimen/thumbnail_height"
-        android:padding="3sp"
-        app:layout_constraintRight_toLeftOf="@+id/guidelineImg"
-        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
+        <TextView
+            android:id="@+id/movieDetailTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_bright"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
 
-    <TextView
-        android:id="@+id/movieDetailReleaseDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/CenterTextTheme"
-        app:layout_constraintLeft_toRightOf="@+id/movieImg"
-        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
+        <ImageView
+            android:id="@+id/movieImg"
+            android:layout_width="@android:dimen/thumbnail_width"
+            android:layout_height="@android:dimen/thumbnail_height"
+            app:layout_constraintRight_toLeftOf="@+id/guidelineImg"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
 
-    <TextView
-        android:id="@+id/movieDetailUserRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/CenterTextTheme"
-        app:layout_constraintLeft_toRightOf="@+id/guidelineImg"
-        app:layout_constraintTop_toBottomOf="@+id/movieDetailReleaseDate" />
 
-    <TextView
-        android:id="@+id/movieDetailPlotSynopsis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/BaseTextTheme"
-        app:layout_constraintTop_toBottomOf="@+id/movieImg" />
+        <TextView
+            android:id="@+id/movieDetailReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/CenterTextTheme"
+            app:layout_constraintLeft_toRightOf="@+id/movieImg"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/movieDetailUserRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/CenterTextTheme"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineImg"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailReleaseDate" />
+
+        <TextView
+            android:id="@+id/movieDetailPlotSynopsis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/BaseTextTheme"
+            app:layout_constraintTop_toBottomOf="@+id/movieImg" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

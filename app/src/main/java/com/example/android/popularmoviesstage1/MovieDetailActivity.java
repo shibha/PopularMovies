@@ -16,7 +16,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_detail);
         Intent intent = getIntent();
-        Movie movieSelected = (Movie) intent.getSerializableExtra("Movie");
+        Movie movieSelected = (Movie) intent.getSerializableExtra(getString(R.string.param));
+        setContent(movieSelected);
+
+    }
+
+    private void setContent(Movie movieSelected) {
         ImageView imageView = findViewById(R.id.movieImg);
         TextView titleView = findViewById(R.id.movieDetailTitle);
         TextView releaseDate =  findViewById(R.id.movieDetailReleaseDate);
@@ -27,6 +32,5 @@ public class MovieDetailActivity extends AppCompatActivity {
         userRating.setText(String.valueOf(movieSelected.getUserRating())+" / 10");
         titleView.setText(movieSelected.getTitle());
         Picasso.with(this).load(movieSelected.getImgPath()).fit().into(imageView);
-
     }
 }
