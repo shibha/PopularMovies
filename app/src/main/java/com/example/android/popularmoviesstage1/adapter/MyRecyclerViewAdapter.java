@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.example.android.popularmoviesstage1.MovieActivity;
 import com.example.android.popularmoviesstage1.MovieDetailActivity;
 import com.example.android.popularmoviesstage1.R;
 import com.example.android.popularmoviesstage1.model.Movie;
@@ -17,26 +15,18 @@ import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private List<Movie> mData;
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    private List<Movie> movies;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
-    private Movie movie;
 
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    // Data is passed into the constructor
     public MyRecyclerViewAdapter(Context context, List<Movie> data) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.movies = data;
     }
 
-    // Inflates the cell layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.grid_view_item, parent, false);
@@ -44,11 +34,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return viewHolder;
     }
 
-    // Binds the data to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Movie movie = mData.get(position);
-        setMovie(movie);
+        final Movie movie = movies.get(position);
         final ImageView imageView = holder.imageView;
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,25 +50,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Picasso.with(imageView.getContext()).load(movie.getImgPath()).fit().into(imageView);
     }
 
-    // Total number of cells
     @Override
     public int getItemCount() {
-        return mData.size();
+        return movies.size();
     }
 
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
+    public interface ListItemClickListener {
+        void onClick(int clickedItem);
     }
 
 
-    // Stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
 
         public ViewHolder(View itemView) {

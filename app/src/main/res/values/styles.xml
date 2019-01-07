@@ -7,14 +7,5 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="BaseTextTheme" >
-        <item name="android:padding">3sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
-    </style>
-    <style name="CenterTextTheme" parent="BaseTextTheme">
-        <item name="android:gravity">center</item>
-    </style>
 
 </resources>

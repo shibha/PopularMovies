@@ -30,15 +30,19 @@ import java.util.Scanner;
 public class NetworkUtils {
 
 
-    final static String GITHUB_BASE_URL = "http://api.themoviedb.org/3/movie/";
+    private final static String GITHUB_BASE_URL = "http://api.themoviedb.org/3/movie/";
 
-    final static String GITHUB_URL_POPULAR = "popular";
+    private final static String GITHUB_URL_POPULAR = "popular";
 
-    final static String GITHUB_URL_TOP_RATED = "top_rated";
+    private final static String GITHUB_URL_TOP_RATED = "top_rated";
 
-    final static String PARAM_QUERY = "api_key";
+    private final static String GITHUB_TRAILER_URL= "videos";
 
-    final static String PARAM_QUERY_VALUE="key";
+    private final static String PARAM_QUERY = "api_key";
+
+    private final static String PARAM_QUERY_VALUE = "api_value";
+
+    private static final String GITHUB_REVIEWS_URL = "reviews";
 
     /**
      * Builds the URL used to query GitHub.
@@ -46,7 +50,7 @@ public class NetworkUtils {
      * @param isSortByMostPopular is the boolean which is used to choose the rest url to call
      * @return The URL to use to query the GitHub.
      */
-    public static URL buildUrl(boolean isSortByMostPopular) {
+    public static URL buildGetMoviesDataUrl(boolean isSortByMostPopular) {
         String final_url = GITHUB_BASE_URL;
 
         if (isSortByMostPopular) {
@@ -55,9 +59,21 @@ public class NetworkUtils {
             final_url = final_url + GITHUB_URL_TOP_RATED;
         }
 
+        return buildFinalUrl(final_url);
+    }
+
+    public static URL buildTrailersDataUrl(int movieId){
+        return buildFinalUrl(GITHUB_BASE_URL  +  movieId + "/" + GITHUB_TRAILER_URL);
+    }
+
+    public static URL buildReviewsDataUrl(int movieId){
+        return buildFinalUrl(GITHUB_BASE_URL  +  movieId + "/" + GITHUB_REVIEWS_URL);
+    }
+
+    private static URL buildFinalUrl(String final_url) {
         Uri builtUri = Uri.parse(final_url).buildUpon()
-                .appendQueryParameter(PARAM_QUERY, PARAM_QUERY_VALUE)
-                .build();
+                    .appendQueryParameter(PARAM_QUERY, PARAM_QUERY_VALUE)
+                    .build();
 
         URL url = null;
         try {

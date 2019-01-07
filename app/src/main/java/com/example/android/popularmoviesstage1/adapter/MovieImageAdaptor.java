@@ -14,9 +14,6 @@ import java.util.logging.Logger;
 
 public class MovieImageAdaptor extends ArrayAdapter<Movie> {
 
-    Logger logger = Logger.getLogger("MovieImageAdaptor");
-
-
     public MovieImageAdaptor(Activity c, List<Movie> movies) {
         super(c, 0, movies);
     }

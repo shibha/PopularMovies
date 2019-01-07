@@ -3,7 +3,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/grid_item_img"
+        android:id="@+id/item_img"
         android:layout_width="300dp"
         android:layout_height="match_parent" />
 </RelativeLayout>
